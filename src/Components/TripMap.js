@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { GoogleMap, useJsApiLoader, DirectionsService, DirectionsRenderer  } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
+import AccomdationLocations from '../Data/Locations';
 
 const containerStyle = {
   width: '100%',
@@ -11,20 +12,20 @@ const center = {
   lng: 144.88791576007955
 };
 
+
 const TripMap = () => {
   const options = {
     disableDefaultUI: true
   }
 
   let count = React.useRef(0);
-  // const [response, setResponse] = React.useState(null);
 
   const directionsCallback = React.useCallback(res => {
     console.log(count.current);
     if (res !== null) {
-      if (res.status === 'OK' && count.current < 2) {
+      if (res.status === 'OK' && count.current < 20) {
         count.current += 1;
-        setDirectionState({response: res});
+        setDirectionState({ response: res });
       } else {
         count.current = 0;
         console.log('res: ', res);
@@ -32,14 +33,15 @@ const TripMap = () => {
     }
   }, []);
 
-  const defaultDState = {
-    origin: '-37.03, 144.23',
-    destination: '-37.60282616918162, 144.89206463838119',
+
+  const initialDirectionState = {
+    origin: AccomdationLocations.Origin.location,
+    destination: AccomdationLocations.Destination.location,
     travelMode: 'DRIVING',
     response: null
   };
 
-  const [directionState, setDirectionState] = useState(defaultDState);
+  const [directionState, setDirectionState] = useState(initialDirectionState);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -70,13 +72,32 @@ const TripMap = () => {
       onUnmount={onUnmount}
       options={options}
     >
-      { /* Child components, such as markers, info windows, etc. */}
+
       {directionState != null && <DirectionsService
         // required
         options={{
           destination: directionState.destination,
           origin: directionState.origin,
           travelMode: directionState.travelMode,
+          optimizeWaypoints: true,
+          waypoints: [{
+            location: AccomdationLocations.Queenstown.location,
+            stopover: true,
+            
+          },
+          {
+            location: AccomdationLocations.FransJosef.location,
+            stopover: true,
+          },
+          {
+            location: AccomdationLocations.ChristChurch.location,
+            stopover: true,
+          },
+          {
+            location: AccomdationLocations.LakeTekapo.location,
+            stopover: true,
+          }
+          ]
         }}
         // required
         callback={directionsCallback}
@@ -91,21 +112,21 @@ const TripMap = () => {
       />
       }
       {directionState != null && directionState.response !== null && (
-          <DirectionsRenderer
-            // required
-            options={{ 
-              directions: directionState.response
-            }}
-            // optional
-            onLoad={directionsRenderer => {
-              console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
-            }}
-            // optional
-            onUnmount={directionsRenderer => {
-              console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
-            }}
-          />
-        )
+        <DirectionsRenderer
+          // required
+          options={{
+            directions: directionState.response
+          }}
+          // optional
+          onLoad={directionsRenderer => {
+            console.log('DirectionsRenderer onLoad directionsRenderer: ', directionsRenderer)
+          }}
+          // optional
+          onUnmount={directionsRenderer => {
+            console.log('DirectionsRenderer onUnmount directionsRenderer: ', directionsRenderer)
+          }}
+        />
+      )
       }
       <></>
     </GoogleMap>

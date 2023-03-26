@@ -14,7 +14,7 @@ const Home = (props) => {
                 {
                     color: 'green',
                     dot: <SmileOutlined />,
-                    children: 'Spend two nights Te Anau 02nd and 3rd April',
+                    children: 'Spend two nights in Te Anau 02nd and 3rd April',
                 },
                 {
                     color: 'green',
