@@ -5,13 +5,15 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Home from './Components/Home';
-import TripMap from './Components/TripMap';
+import BaseMapContainer from './Container/BaseMapContainer';
 
 
 import { FileOutlined, PieChartOutlined, DesktopOutlined, TeamOutlined } from '@ant-design/icons';
 import { Layout, theme, Typography, Col, Row } from 'antd';
 import Queenstown from './Components/Queenstown';
 import { Stops } from './Components/Stops';
+import MenuSider from './Components/MenuSider';
+import { MapsProvider } from './Hooks/MapContext';
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
@@ -35,66 +37,59 @@ const items = [
 
 
 const Main = () => {
-  const [collapsed, setCollapsed] = useState(true);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   return (
-    <BrowserRouter>
-      <Layout
-        style={{
-          minHeight: '100vh',
-        }}
-      >
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <div
-            style={{
-              height: 32,
-              margin: 16,
-              background: 'rgba(255, 255, 255, 0.2)',
-            }}
-          />
-          <Stops />
-        </Sider>
-        <Layout className="site-layout">
-          <Header
-            style={{
-              padding: 5,
-              textAlign: 'center',
-              background: colorBgContainer,
-            }}
-          > <Title style={{marginTop: 0}}>South Island </Title></Header>
-          <Content
-            style={{
-              margin: '10px 36px',
-            }}
-          >
-            <Row>
-              <Col xs={0} md={24}>
-                <Routes>
-                  <Route index element={<Home />} />
-                  <Route path="queenstown" element={<Queenstown />} />
-                </Routes>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={24} lg={23}>
-                <TripMap />
-              </Col>
-            </Row>
+    <MapsProvider>
+      <BrowserRouter>
+        <Layout
+          style={{
+            minHeight: '100vh',
+          }}
+        >
+          <MenuSider />
+          <Layout className="site-layout">
+            <Header
+              style={{
+                padding: 5,
+                textAlign: 'center',
+                background: colorBgContainer,
+              }}
+            > <Title style={{ marginTop: 0 }}>South Island </Title></Header>
+            <Content
+              style={{
+                margin: '10px',
+              }}
+            >
+              <Row>
+                <Col xs={0} md={24}>
+                  <Routes>
+                    <Route index element={<Home />} />
+                    <Route path="queenstown" element={<Queenstown />} />
+                  </Routes>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={24}>
+                  <BaseMapContainer />
+                </Col>
+              </Row>
 
-          </Content>
-          <Footer
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            <h3>Buddhika Semasinghe 2023</h3>
-          </Footer>
-        </Layout>
-      </Layout>
-    </BrowserRouter>
+            </Content>
+            <Footer
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              <h3>@Buddhika Semasinghe 2023</h3>
+            </Footer>
+          </Layout>
+        </Layout> 
+      </BrowserRouter>
+    </MapsProvider>
   );
 }
 

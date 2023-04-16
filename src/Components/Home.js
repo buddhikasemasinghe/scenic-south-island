@@ -9,7 +9,7 @@ const Home = (props) => {
                 {
                     color: '#00CCFF',
                     dot: <ArrowUpOutlined />,
-                    children: 'Depart from MEL and Te Anau 02/04',
+                    children: 'Departure from MEL on 02/04',
                 },
                 {
                     color: 'green',
