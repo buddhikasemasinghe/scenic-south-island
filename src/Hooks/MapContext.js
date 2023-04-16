@@ -63,7 +63,7 @@ const initialMapState = [
     },
     {
         id: 2,
-        place: 'fans josef',
+        place: 'frans josef',
         location: {
             lat: -37.418173973303435,//, 
             lng: 144.48591576007955

@@ -4,16 +4,21 @@ import {
   BrowserRouter
 } from 'react-router-dom';
 import './App.css';
-import Home from './Components/Home';
+import Overview from './Components/Overview';
 import BaseMapContainer from './Container/BaseMapContainer';
 
 
 import { FileOutlined, PieChartOutlined, DesktopOutlined, TeamOutlined } from '@ant-design/icons';
 import { Layout, theme, Typography, Col, Row } from 'antd';
 import Queenstown from './Components/Queenstown';
-import { Stops } from './Components/Stops';
+import { TopMenu } from './Components/TopMenu';
 import MenuSider from './Components/MenuSider';
 import { MapsProvider } from './Hooks/MapContext';
+import Summary from './Components/Summary';
+import TeAnau from './Components/TeAnau';
+import FranzJosef from './Components/FranzJosef';
+import Akaroa from './Components/Akaroa';
+import LakeTekapo from './Components/LakeTekapo';
 const { Header, Content, Footer, Sider } = Layout;
 const { Title } = Typography;
 
@@ -50,7 +55,6 @@ const Main = () => {
             minHeight: '100vh',
           }}
         >
-          <MenuSider />
           <Layout className="site-layout">
             <Header
               style={{
@@ -58,25 +62,32 @@ const Main = () => {
                 textAlign: 'center',
                 background: colorBgContainer,
               }}
-            > <Title style={{ marginTop: 0 }}>South Island </Title></Header>
+            > 
+            <TopMenu/>
+            </Header>
             <Content
               style={{
-                margin: '10px',
+                margin: '5px'
               }}
-            >
+            >     
               <Row>
-                <Col xs={0} md={24}>
+                <Col xs={24}>
                   <Routes>
-                    <Route index element={<Home />} />
+                    <Route index element={<Summary />} />
+                    <Route path="overview" element={<Overview />} />
                     <Route path="queenstown" element={<Queenstown />} />
+                    <Route path="teAnau" element={<TeAnau />} />
+                    <Route path="franzjosef" element={<FranzJosef />} />
+                    <Route path="akaroa" element={<Akaroa />} />
+                    <Route path="lakeTekapo" element={<LakeTekapo />} />
                   </Routes>
                 </Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col xs={24}>
                   <BaseMapContainer />
                 </Col>
-              </Row>
+              </Row> */}
 
             </Content>
             <Footer
@@ -87,7 +98,7 @@ const Main = () => {
               <h3>@Buddhika Semasinghe 2023</h3>
             </Footer>
           </Layout>
-        </Layout> 
+        </Layout>
       </BrowserRouter>
     </MapsProvider>
   );

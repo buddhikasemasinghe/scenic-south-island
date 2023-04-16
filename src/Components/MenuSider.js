@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stops } from './Stops';
+import { TopMenu } from './TopMenu';
 import { Layout } from 'antd';
 const { Sider } = Layout;
 
@@ -18,7 +18,7 @@ const MenuSider = (props) => {
           background: 'rgba(255, 255, 255, 0.2)',
         }}
       />
-      <Stops />
+      <TopMenu />
     </Sider>
   );
 }
